@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buku Panduan Bursa Lens — Cara Pakai &amp; Cara Membaca Hasil Analisis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1220; --bg-elevated:#101a30; --bg-card:#141f38; --bg-card-hover:#182444;
+    --border:#233052; --border-soft:#1b2740;
+    --text:#E9EEF9; --text-dim:#8b96ac; --text-faint:#5b6480;
+    --accent:#2DD4A7; --accent-dark:#1fae87; --accent-soft:rgba(45,212,167,.12);
+    --warn:#F5B942; --warn-soft:rgba(245,185,66,.12);
+    --danger:#FF6B6B; --danger-soft:rgba(255,107,107,.12);
+    --blue:#5AB4F5; --purple:#C77DFF;
+    --radius:14px; --radius-sm:9px;
+    --font-display:'Space Grotesk',sans-serif; --font-body:'Inter',sans-serif; --font-mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ background:var(--bg); color:var(--text); font-family:var(--font-body); font-size:15px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  ::-webkit-scrollbar{ width:10px; height:10px; }
+  ::-webkit-scrollbar-track{ background:transparent; }
+  ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:10px; }
+  h1,h2,h3,h4{ font-family:var(--font-display); letter-spacing:-0.01em; margin:0; }
+  .mono{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
+  a{ color:var(--accent); }
+  p{ color:var(--text-dim); }
+  strong{ color:var(--text); }
+
+  .app{ display:flex; min-height:100vh; }
+  .sidebar{
+    width:280px; flex-shrink:0; background:var(--bg-elevated); border-right:1px solid var(--border-soft);
+    position:fixed; top:0; bottom:0; left:0; overflow-y:auto; z-index:20; transition:transform .25s ease;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; padding:22px 20px 16px; border-bottom:1px solid var(--border-soft); }
+  .brand-mark{ width:36px;height:36px;border-radius:9px; background:linear-gradient(135deg,var(--accent),var(--accent-dark)); display:flex;align-items:center;justify-content:center; font-family:var(--font-display); font-weight:700; color:#04140f; font-size:15px; flex-shrink:0; }
+  .brand-text strong{ display:block; font-family:var(--font-display); font-size:15px; font-weight:700; color:var(--text);}
+  .brand-text span{ font-size:10.5px; color:var(--text-faint); letter-spacing:.05em; }
+
+  nav.booknav{ padding:14px 10px 30px; display:flex; flex-direction:column; gap:2px; }
+  .nav-label{ font-size:10px; text-transform:uppercase; letter-spacing:.09em; color:var(--text-faint); padding:14px 12px 6px; }
+  .navitem{
+    display:flex; align-items:baseline; gap:9px; padding:8px 12px; border-radius:var(--radius-sm);
+    color:var(--text-dim); text-decoration:none; cursor:pointer; border:1px solid transparent; background:none;
+    width:100%; text-align:left; font-size:12.8px; font-weight:500; line-height:1.4;
+  }
+  .navitem .nnum{ font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); flex-shrink:0; }
+  .navitem:hover{ background:var(--bg-card); color:var(--text); }
+  .navitem.active{ background:var(--accent-soft); color:var(--accent); border-color:rgba(45,212,167,.25); }
+  .navitem.active .nnum{ color:var(--accent); }
+
+  .main{ margin-left:280px; flex:1; min-width:0; }
+  .content{ max-width:840px; margin:0 auto; padding:56px 48px 120px; }
+  .chapter{ display:none; animation:fadein .25s ease; }
+  .chapter.active{ display:block; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;} }
+
+  .eyebrow{ font-family:var(--font-mono); font-size:11.5px; color:var(--accent); letter-spacing:.08em; text-transform:uppercase; margin-bottom:10px; }
+  .chapter h1.title{ font-size:32px; color:var(--text); margin-bottom:14px; }
+  .chapter .lead{ font-size:16.5px; color:var(--text-dim); margin-bottom:34px; max-width:640px; }
+  .chapter h2{ font-size:21px; color:var(--text); margin:38px 0 12px; padding-top:6px; }
+  .chapter h3{ font-size:16px; color:var(--text); margin:26px 0 10px; }
+  .chapter h4{ font-size:13.5px; color:var(--accent); margin:18px 0 8px; text-transform:uppercase; letter-spacing:.04em; }
+  .chapter p{ margin:0 0 14px; }
+  .chapter ul, .chapter ol{ color:var(--text-dim); padding-left:22px; margin:0 0 16px; }
+  .chapter li{ margin-bottom:7px; }
+  .chapter li strong{ color:var(--text); }
+
+  .card{ background:var(--bg-card); border:1px solid var(--border-soft); border-radius:var(--radius); padding:22px 24px; margin:20px 0; }
+  .card.tight{ padding:16px 20px; }
+  .note{ border-left:3px solid var(--accent); background:var(--accent-soft); }
+  .warn-box{ border-left:3px solid var(--warn); background:var(--warn-soft); }
+  .danger-box{ border-left:3px solid var(--danger); background:var(--danger-soft); }
+  .note h4, .warn-box h4, .danger-box h4{ margin-top:0; }
+  .note h4{ color:var(--accent); } .warn-box h4{ color:var(--warn); } .danger-box h4{ color:var(--danger); }
+
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; margin:16px 0 22px; }
+  th{ text-align:left; font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); font-weight:600; padding:9px 12px; border-bottom:1px solid var(--border); }
+  td{ padding:10px 12px; border-bottom:1px solid var(--border-soft); color:var(--text-dim); }
+  td:first-child, td.k{ color:var(--text); font-weight:600; font-family:var(--font-mono); font-size:13px; }
+  tr:last-child td{ border-bottom:none; }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--border-soft); border-radius:var(--radius-sm); }
+  .table-wrap table{ margin:0; }
+  .table-wrap th:first-child, .table-wrap td:first-child{ padding-left:14px; }
+
+  .badge{ display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:100px; font-size:11.5px; font-weight:600; font-family:var(--font-mono); }
+  .badge.good{ background:var(--accent-soft); color:var(--accent); }
+  .badge.mid{ background:var(--warn-soft); color:var(--warn); }
+  .badge.bad{ background:var(--danger-soft); color:var(--danger); }
+
+  .steps{ counter-reset:step; list-style:none; padding:0; margin:18px 0; }
+  .steps li{ counter-increment:step; position:relative; padding:4px 0 20px 40px; border-left:1px solid var(--border); margin-left:14px; }
+  .steps li:last-child{ border-left-color:transparent; padding-bottom:0; }
+  .steps li::before{
+    content:counter(step); position:absolute; left:-15px; top:0; width:29px; height:29px; border-radius:50%;
+    background:var(--bg-card); border:1px solid var(--border); color:var(--accent); font-family:var(--font-mono);
+    font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  }
+  .steps li strong{ display:block; color:var(--text); font-size:14px; margin-bottom:3px; }
+
+  .widget{ background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius); padding:22px 24px; margin:20px 0 26px; }
+  .widget-label{ font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.08em; display:flex; align-items:center; gap:8px; margin-bottom:14px;}
+  .widget-label .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); }
+  .widget-canvas-wrap{ position:relative; }
+  input[type=range]{ width:100%; accent-color:var(--accent); }
+  .widget-controls{ display:flex; flex-direction:column; gap:12px; margin-top:14px; }
+  .widget-row{ display:flex; align-items:center; gap:12px; }
+  .widget-row label{ font-size:12.5px; color:var(--text-dim); min-width:120px; flex-shrink:0; }
+  .widget-readout{ font-family:var(--font-mono); font-weight:700; color:var(--accent); min-width:60px; text-align:right; }
+  .widget-explain{ margin-top:16px; padding:14px 16px; background:var(--bg-card); border-radius:var(--radius-sm); font-size:13px; color:var(--text-dim); min-height:20px; border:1px solid var(--border-soft); }
+  .widget-explain strong{ color:var(--text); }
+  .btn-toggle-group{ display:flex; gap:6px; flex-wrap:wrap; }
+  .btn-toggle{ background:var(--bg-card); border:1px solid var(--border); color:var(--text-dim); padding:7px 13px; border-radius:var(--radius-sm); cursor:pointer; font-size:12px; font-weight:600; }
+  .btn-toggle.active{ background:var(--accent-soft); color:var(--accent); border-color:rgba(45,212,167,.3); }
+
+  .toc-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 20px; margin:24px 0; }
+  .toc-grid a{ display:block; padding:12px 14px; background:var(--bg-card); border:1px solid var(--border-soft); border-radius:var(--radius-sm); text-decoration:none; color:var(--text-dim); font-size:13px; }
+  .toc-grid a:hover{ background:var(--bg-card-hover); color:var(--text); }
+  .toc-grid a b{ display:block; color:var(--text); font-family:var(--font-display); font-size:14px; margin-bottom:2px; }
+
+  .glossary dt{ color:var(--text); font-weight:700; font-family:var(--font-mono); font-size:13.5px; margin-top:16px; }
+  .glossary dd{ color:var(--text-dim); margin:4px 0 0; }
+
+  .book-footer-nav{ display:flex; justify-content:space-between; margin-top:56px; padding-top:24px; border-top:1px solid var(--border-soft); }
+  .book-footer-nav button{ background:var(--bg-card); border:1px solid var(--border); color:var(--text); padding:11px 18px; border-radius:var(--radius-sm); cursor:pointer; font-size:13px; font-weight:600; font-family:inherit; }
+  .book-footer-nav button:hover{ background:var(--bg-card-hover); }
+  .book-footer-nav button:disabled{ opacity:.35; cursor:default; }
+
+  .cover{ display:flex; flex-direction:column; justify-content:center; min-height:calc(100vh - 176px); }
+  .cover .kicker{ font-family:var(--font-mono); color:var(--accent); font-size:13px; letter-spacing:.12em; text-transform:uppercase; margin-bottom:18px; }
+  .cover h1{ font-size:48px; line-height:1.08; color:var(--text); margin-bottom:20px; max-width:600px; }
+  .cover .sub{ font-size:17px; color:var(--text-dim); max-width:520px; margin-bottom:36px; }
+  .cover-meta{ display:flex; gap:28px; flex-wrap:wrap; margin-top:10px; }
+  .cover-meta div span{ display:block; }
+  .cover-meta .cm-label{ font-size:10.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.06em; }
+  .cover-meta .cm-value{ font-family:var(--font-mono); color:var(--text); font-size:14px; margin-top:3px; }
+
+  .hamburger{ display:none; }
+  @media (max-width:900px){
+    .sidebar{ transform:translateX(-100%); }
+    .sidebar.open{ transform:translateX(0); }
+    .main{ margin-left:0; }
+    .content{ padding:24px 20px 100px; }
+    .toc-grid{ grid-template-columns:1fr; }
+    .hamburger{ display:flex; align-items:center; justify-content:center; width:38px;height:38px; border-radius:9px; background:var(--bg-card); border:1px solid var(--border); color:var(--text); cursor:pointer; position:fixed; top:16px; left:16px; z-index:30; }
+    .cover h1{ font-size:32px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="hamburger" id="hamburgerBtn" aria-label="Buka daftar isi">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+</button>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">BL</div>
+      <div class="brand-text"><strong>Bursa Lens</strong><span>BUKU PANDUAN</span></div>
+    </div>
+    <nav class="booknav" id="bookNav"><!-- diisi JS --></nav>
+  </aside>
+
+  <div class="main">
+    <div class="content" id="contentWrap">
+
+<section class="chapter active" id="chapter-sampul">
+  <div class="cover">
+    <div class="kicker">Buku Panduan Resmi</div>
+    <h1>Bursa Lens.<br>Cara pakai, dan cara membaca<br>hasilnya dengan benar.</h1>
+    <p class="sub">Panduan lengkap 8 modul analisis — dari rasio fundamental sampai candlestick teknikal —
+    ditulis supaya angka yang kamu lihat di layar berubah jadi keputusan yang bisa dipertanggungjawabkan,
+    bukan sekadar warna hijau-merah.</p>
+    <div class="cover-meta">
+      <div><span class="cm-label">Cakupan</span><span class="cm-value">11 Bab + Glosarium</span></div>
+      <div><span class="cm-label">Untuk versi</span><span class="cm-value">Bursa Lens Desktop (pywebview)</span></div>
+      <div><span class="cm-label">Format</span><span class="cm-value">Interaktif — coba geser slidernya</span></div>
+    </div>
+  </div>
+
+</section>
+
+<section class="chapter" id="chapter-pendahuluan">
+  <div class="eyebrow">Mulai Dari Sini</div>
+  <h1 class="title">Pendahuluan &amp; Disclaimer</h1>
+  <p class="lead">Sebelum masuk ke tombol dan angka, penting untuk sepakat dulu soal apa yang bisa dan tidak bisa dilakukan alat ini.</p>
+
+  <h2>Apa itu Bursa Lens?</h2>
+  <p>Bursa Lens adalah aplikasi desktop yang mengambil data pasar saham Indonesia (dan sedikit saham global) langsung dari <strong>yfinance</strong>, lalu mengubahnya jadi rasio, skor, dan grafik yang lebih mudah dibaca dibanding membuka laporan keuangan mentah satu per satu. Ada 8 modul utama: Analisis Saham, Screener, Laporan Keuangan, Analisis IPO, Bandingkan Saham, Analisis Teknikal, Portofolio, dan Catatan Riset — plus fitur ekspor PDF gabungan.</p>
+
+  <div class="card danger-box">
+    <h4>⚠️ Ini bukan nasihat investasi</h4>
+    <p style="margin-bottom:0;">Setiap skor, label ("Fundamental Kuat", "Layak Jangka Panjang", dsb), dan sinyal teknikal di aplikasi ini dihasilkan dari <strong>aturan matematis sederhana</strong> yang ditulis dalam kode — bukan dari analis manusia yang memahami konteks bisnis, berita terbaru, atau niat manajemen. Buku ini akan berulang kali mengingatkan hal ini di setiap bab, bukan basa-basi hukum, tapi karena ini betul-betul mengubah cara kamu seharusnya memakai angkanya.</p>
+  </div>
+
+  <h2>Tiga keterbatasan yang perlu kamu terima dari awal</h2>
+  <ol>
+    <li><strong>Sumber data tunggal.</strong> Hampir semua angka fundamental &amp; harga berasal dari yfinance. Kalau yfinance salah, terlambat update, atau strukturnya berubah suatu saat, semua fitur yang bergantung padanya ikut terdampak — tidak ada sumber cadangan otomatis.</li>
+    <li><strong>Endpoint IDX itu tidak resmi.</strong> Fitur sektor, direktori saham, dan laporan resmi IDX memakai endpoint yang dipakai situs idx.co.id sendiri (bukan API publik berdokumen). Bisa berhenti berfungsi kapan saja tanpa pemberitahuan — aplikasi sudah punya fallback daftar sektor manual untuk kondisi ini, tapi tetap tidak selengkap data live.</li>
+    <li><strong>Skor adalah heuristik, bukan model prediktif.</strong> "PER &lt; 15 = +1 poin" adalah aturan umum yang masuk akal secara rata-rata, tapi tidak tahu bahwa perusahaan tertentu memang secara wajar dihargai PER tinggi karena pertumbuhannya luar biasa (atau sebaliknya, PER rendah karena bisnisnya memang sedang sekarat). Konteks itu tugas kamu untuk mengisi — lewat modul Catatan Riset Kualitatif.</li>
+  </ol>
+
+  <h2>Bagaimana cara pakai buku ini</h2>
+  <p>Buku ini punya dua jenis bab. Bab <strong>1–10</strong> mengikuti struktur menu aplikasi (Analisis Saham → Screener → ... → Laporan Gabungan), menjelaskan cara pakai <em>sekaligus</em> cara membaca hasilnya dengan benar — dua hal ini sengaja digabung per bab supaya kamu tidak perlu bolak-balik. Bab <strong>11</strong> berbeda: isinya kumpulan kesalahan baca yang paling sering terjadi lintas semua modul — cocok dibaca ulang secara berkala, bukan cuma sekali di awal.</p>
+  <p>Beberapa bab punya <strong>diagram interaktif</strong> — geser slider atau klik tombolnya, keterangan di bawahnya akan berubah mengikuti. Ini supaya konsep seperti "zona oversold RSI" atau "zona aman Altman Z-Score" tidak cuma jadi definisi kaku, tapi sesuatu yang bisa kamu rasakan pergerakannya.</p>
+
+
+</section>
+
+<section class="chapter" id="chapter-navigasi">
+  <div class="eyebrow">Mulai Dari Sini</div>
+  <h1 class="title">Mengenal Antarmuka</h1>
+  <p class="lead">Semua modul bisa diakses dari sidebar kiri, dikelompokkan berdasarkan jenis riset.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Grup Menu</th><th>Modul</th><th>Fungsi Singkat</th></tr></thead>
+      <tbody>
+        <tr><td>Riset Saham</td><td>Analisis Saham</td><td>Rasio fundamental + skor 1 saham secara mendalam</td></tr>
+        <tr><td>Riset Saham</td><td>Screener Multi-Saham</td><td>Saring &amp; ranking banyak saham sekaligus</td></tr>
+        <tr><td>Riset Saham</td><td>Laporan Keuangan</td><td>Laba rugi, neraca, arus kas historis</td></tr>
+        <tr><td>Riset Saham</td><td>Bandingkan Saham</td><td>2 saham berdampingan + grafik radar</td></tr>
+        <tr><td>Riset Saham</td><td>Analisis Teknikal</td><td>Candlestick, indikator, support/resistance</td></tr>
+        <tr><td>Valuasi Khusus</td><td>Analisis IPO</td><td>Estimasi valuasi dari data prospektus</td></tr>
+        <tr><td>Portofolio</td><td>Portofolio Saya</td><td>Kepemilikan &amp; grafik performa dari waktu ke waktu</td></tr>
+        <tr><td>Riset Kualitatif</td><td>Catatan Riset</td><td>Moat, manajemen, risiko — konteks yang tidak ada di angka</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Pola kode saham</h2>
+  <p>Ketik kode 4 huruf (mis. <code class="mono">BBCA</code>) dan aplikasi otomatis menambahkan akhiran <code class="mono">.JK</code> untuk saham Indonesia. Untuk saham global, ketik kode aslinya (mis. <code class="mono">AAPL</code>, <code class="mono">TSLA</code>) — sistem akan mencoba kode itu apa adanya dulu sebelum mencoba fallback <code class="mono">.JK</code>.</p>
+
+  <h2>Kolom kode saham punya autocomplete</h2>
+  <p>Mulai dari 2 huruf yang kamu ketik di kolom kode saham manapun, dropdown akan muncul menampilkan nama perusahaan yang cocok — berguna kalau kamu ingat nama perusahaannya tapi lupa kode tickernya persis.</p>
+
+  <div class="card note">
+    <h4>💡 Tombol Reset itu penting</h4>
+    <p style="margin-bottom:0;">Hampir tiap tab punya tombol "🔄 Reset". Pakai ini kalau kamu mau ganti saham dari nol — bukan cuma mengetik ulang kolom kode saham — supaya grafik lama tidak "menempel" bercampur dengan data baru yang sedang dimuat.</p>
+  </div>
+
+
+</section>
+
+<section class="chapter" id="chapter-bab1">
+  <div class="eyebrow">Bab 1</div>
+  <h1 class="title">Analisis Saham (Fundamental)</h1>
+  <p class="lead">Ini titik masuk paling umum: ketik satu kode saham, dapatkan 25+ rasio, skor screening otomatis, dan pita valuasi historisnya.</p>
+
+  <h2>Cara pakai</h2>
+  <ol class="steps">
+    <li><strong>Ketik kode saham</strong>lalu klik "Analisis" (atau tekan Enter). Kode 4 huruf otomatis diberi akhiran <code class="mono">.JK</code>.</li>
+    <li><strong>Baca kartu skor di kanan atas</strong> — angka besar (mis. <code class="mono">+3</code>) dan label seperti "Fundamental Kuat" adalah kesimpulan otomatis dari 8 rasio utama.</li>
+    <li><strong>Scroll ke Pita Valuasi Historis</strong> untuk melihat posisi harga saat ini relatif terhadap rentang harga historisnya sendiri.</li>
+    <li><strong>Hitung Skor Investasi Jangka Panjang</strong> (opsional, lebih dalam — dibahas di Bab 2) kalau kamu sedang mempertimbangkan saham ini untuk jangka panjang, bukan sekadar screening cepat.</li>
+  </ol>
+
+  <h2>Cara membaca skor screening otomatis</h2>
+  <p>Skor ini dihitung dari 8 rasio, tiap rasio menyumbang <strong>+1, 0, atau -1</strong> berdasarkan ambang batas berikut (persis seperti yang tertulis di kode aplikasi — bukan estimasi):</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Rasio</th><th>+1 (Positif)</th><th>-1 (Negatif)</th><th>Kenapa ambang ini dipakai</th></tr></thead>
+      <tbody>
+        <tr><td>PER</td><td>&lt; 15x</td><td>&gt; 25x</td><td>Rule of thumb pasar Indonesia untuk "murah/wajar" vs "mahal"</td></tr>
+        <tr><td>PBV</td><td>&lt; 1.5x</td><td>&gt; 4x</td><td>Di bawah 1x = harga di bawah nilai buku aset bersih</td></tr>
+        <tr><td>ROE</td><td>&gt; 15%</td><td>&lt; 5%</td><td>15% dianggap profitabilitas ekuitas yang sehat di banyak sektor</td></tr>
+        <tr><td>DER</td><td>&lt; 1x</td><td>&gt; 2x</td><td>Di atas 2x = beban bunga & risiko solvabilitas mulai signifikan</td></tr>
+        <tr><td>Revenue Growth</td><td>&gt; 10%</td><td>&lt; 0%</td><td>Pertumbuhan negatif = red flag langsung, bukan cuma "kurang bagus"</td></tr>
+        <tr><td>Net Profit Margin</td><td>&gt; 10%</td><td>&lt; 0%</td><td>Margin negatif = perusahaan sedang merugi</td></tr>
+        <tr><td>Current Ratio</td><td>&gt; 1.5</td><td>&lt; 1</td><td>Di bawah 1 = aset lancar tidak cukup menutup liabilitas jangka pendek</td></tr>
+        <tr><td>PEG Ratio</td><td>0 &lt; PEG &lt; 1</td><td>&gt; 2</td><td>Menghubungkan PER dengan laju pertumbuhan laba, bukan PER absolut</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card warn-box">
+    <h4>⚠️ Kenapa skor +8 itu jarang terjadi (dan itu wajar)</h4>
+    <p style="margin-bottom:0;">Skor ini rentang teoretisnya -8 sampai +8, tapi dalam praktiknya saham yang sangat murah (PER &amp; PBV rendah) biasanya <em>karena suatu alasan</em> — sering kali pertumbuhannya juga lambat, jadi jarang dapat +1 di Revenue Growth sekaligus. Skor +3 sampai +5 sudah tergolong kuat. Jangan tunggu skor sempurna; itu justru sinyal untuk curiga datanya tidak lengkap.</p>
+  </div>
+
+  <h3>Level skor & labelnya</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Skor</th><th>Label</th></tr></thead>
+      <tbody>
+        <tr><td>≥ 4</td><td><span class="badge good">Fundamental Kuat</span></td></tr>
+        <tr><td>2 s/d 3</td><td><span class="badge good">Fundamental Cukup Baik</span></td></tr>
+        <tr><td>-1 s/d 1</td><td><span class="badge mid">Netral / Perlu Analisis Lanjut</span></td></tr>
+        <tr><td>≤ -2</td><td><span class="badge bad">Fundamental Kurang Menarik</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Cara membaca Pita Valuasi Historis (PER &amp; PBV)</h2>
+  <p>Grafik ini menjawab pertanyaan: <em>"Dibanding harga saham ini sendiri 5 tahun terakhir, sekarang lagi mahal atau murah?"</em> — bukan dibanding kompetitor. Kuncinya adalah angka <strong>persentil</strong>: persentase waktu di mana PER historisnya lebih murah dari sekarang.</p>
+
+  <div class="card danger-box">
+    <h4>⚠️ Ini estimasi, bukan PER historis riil</h4>
+    <p style="margin-bottom:0;">Perhitungannya memakai EPS &amp; Book Value <strong>saat ini</strong>, diterapkan ke <strong>harga historis</strong> — bukan rekonstruksi EPS kuartalan riil per periode (yfinance tidak menyediakan itu secara konsisten). Jadi ini menunjukkan posisi <em>harga</em> relatif terhadap rentangnya sendiri, diskalakan dengan profitabilitas hari ini — cukup berguna untuk sinyal awal, tapi jangan diperlakukan sebagai data PER historis yang presisi.</p>
+  </div>
+
+  <div class="widget">
+    <div class="widget-label"><span class="dot"></span>Diagram Interaktif — Persentil PER</div>
+    <div class="widget-canvas-wrap"><canvas id="cv-per-percentile" width="740" height="120"></canvas></div>
+    <div class="widget-controls">
+      <div class="widget-row">
+        <label for="rg-per-percentile">Persentil PER saat ini</label>
+        <input type="range" id="rg-per-percentile" min="0" max="100" value="50">
+        <span class="widget-readout" id="rd-per-percentile">50%</span>
+      </div>
+    </div>
+    <div class="widget-explain" id="ex-per-percentile"></div>
+  </div>
+
+  <h2>Rincian tiap metrik fundamental</h2>
+  <h4>Valuasi</h4>
+  <p><strong>PER (Price to Earnings Ratio)</strong> — berapa tahun laba dibutuhkan untuk "balik modal" di harga saat ini kalau laba konstan. <strong>PBV (Price to Book Value)</strong> — harga saham dibanding nilai buku aset bersih per saham. <strong>PEG Ratio</strong> — PER dibagi laju pertumbuhan laba; PER tinggi jadi masuk akal kalau pertumbuhannya juga tinggi, dan PEG menangkap itu.</p>
+  <h4>Profitabilitas</h4>
+  <p><strong>ROE</strong> mengukur seberapa efisien ekuitas pemegang saham menghasilkan laba. <strong>ROA</strong> versi yang sama tapi dibanding total aset (mengabaikan struktur pendanaan). Kalau ROE tinggi tapi ROA rendah, curigai leverage (hutang) tinggi yang "mendongkrak" ROE secara artifisial — cek DER sebelum menyimpulkan profitabilitasnya benar-benar bagus.</p>
+  <h4>Kesehatan Keuangan</h4>
+  <p><strong>DER</strong> (Debt to Equity) — total hutang dibanding ekuitas. <strong>Current Ratio</strong> — aset lancar dibanding liabilitas lancar, mengukur kemampuan bayar kewajiban jangka pendek. <strong>Quick Ratio</strong> mirip tapi mengeluarkan persediaan (lebih ketat, relevan untuk sektor dengan stok lambat berputar).</p>
+  <h4>Lain-lain yang sering diabaikan</h4>
+  <p><strong>Beta</strong> — seberapa fluktuatif saham ini dibanding pasar (beta &gt; 1 = lebih fluktuatif). <strong>Dividend Yield</strong> — dividen tahunan dibagi harga saham; perhatikan <strong>Payout Ratio</strong>-nya juga (ada di Skor Jangka Panjang, Bab 2) sebelum menyimpulkan dividen ini berkelanjutan atau tidak.</p>
+
+  <h2>Sumber Resmi IDX</h2>
+  <p>Di bagian bawah tab ini ada tombol untuk membuka profil perusahaan &amp; halaman aksi korporasi langsung di idx.co.id, plus pencarian file laporan keuangan resmi (audited/kuartalan) per tahun. Gunakan ini untuk <strong>verifikasi silang</strong> — kalau ada angka dari yfinance yang terasa janggal, laporan resmi IDX adalah sumber kebenaran akhir, bukan aplikasi ini.</p>
+
+</section>
+
+<section class="chapter" id="chapter-bab2">
+  <div class="eyebrow">Bab 2</div>
+  <h1 class="title">Skor Investasi Jangka Panjang</h1>
+  <p class="lead">Skor 0–100 gabungan dari 11 kategori, dengan bobot yang bisa kamu atur sendiri sesuai gaya investasi. Ini ada di bagian bawah tab Analisis Saham, setelah Pita Valuasi.</p>
+
+  <h2>11 kategori yang dinilai</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Kategori</th><th>Bobot Default</th><th>Inti Penilaian</th></tr></thead>
+      <tbody>
+        <tr><td>Valuasi</td><td>14%</td><td>PER, PBV, PEG relatif terhadap ambang umum</td></tr>
+        <tr><td>Profitabilitas</td><td>11%</td><td>ROE, ROA, margin laba bersih</td></tr>
+        <tr><td>Kesehatan Keuangan</td><td>13%</td><td>DER, Current Ratio, Quick Ratio, + Free Cash Flow &amp; Interest Coverage Ratio</td></tr>
+        <tr><td>Pertumbuhan</td><td>10%</td><td>Revenue growth + tren laba bersih historis</td></tr>
+        <tr><td>Konsistensi</td><td>9%</td><td>Berapa tahun laba positif &amp; rutin bagi dividen (5 tahun terakhir)</td></tr>
+        <tr><td>Kualitas Laba</td><td>10%</td><td>Arus kas operasi vs laba bersih — laba "asli kas" atau cuma di atas kertas</td></tr>
+        <tr><td>Peer/Sektor</td><td>9%</td><td>PER &amp; ROE dibanding rata-rata sub-sektor (data resmi IDX)</td></tr>
+        <tr><td>Teknikal &amp; Momentum</td><td>6%</td><td>Posisi harga vs SMA50/200, RSI, momentum 12 bulan</td></tr>
+        <tr><td>Risiko (Volatilitas)</td><td>4%</td><td>Beta &amp; volatilitas tahunan harga</td></tr>
+        <tr><td>Risiko Kebangkrutan</td><td>8%</td><td>Altman Z''-Score</td></tr>
+        <tr><td>Kepemilikan &amp; Payout</td><td>6%</td><td>Kepemilikan insider &amp; kewajaran payout ratio dividen</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card note">
+    <h4>💡 Kenapa harus mengatur bobot sendiri?</h4>
+    <p style="margin-bottom:0;">Investor <em>value</em> mungkin ingin menaikkan bobot Valuasi &amp; Kesehatan Keuangan lalu menurunkan Teknikal. Investor yang lebih fokus momentum bisa membalik itu. Bobot default di atas adalah titik tengah yang netral — tidak ada satu bobot yang "benar" untuk semua orang, jadi jangan anggap default = rekomendasi resmi.</p>
+  </div>
+
+  <h2>Cara membaca Altman Z''-Score (risiko kebangkrutan)</h2>
+  <p>Ini rumus akademis (versi Altman-Hartzell-Peck 1995 untuk <em>emerging market</em>) yang menggabungkan modal kerja, laba ditahan, EBIT, dan nilai pasar terhadap total aset &amp; liabilitas jadi satu angka. Semakin tinggi, semakin jauh dari risiko gagal bayar/kebangkrutan secara struktural.</p>
+
+  <div class="widget">
+    <div class="widget-label"><span class="dot"></span>Diagram Interaktif — Zona Altman Z''-Score</div>
+    <div class="widget-canvas-wrap"><canvas id="cv-zscore" width="740" height="130"></canvas></div>
+    <div class="widget-controls">
+      <div class="widget-row">
+        <label for="rg-zscore">Nilai Z''-Score</label>
+        <input type="range" id="rg-zscore" min="0" max="12" step="0.1" value="6">
+        <span class="widget-readout" id="rd-zscore">6.0</span>
+      </div>
+    </div>
+    <div class="widget-explain" id="ex-zscore"></div>
+  </div>
+
+  <div class="card warn-box">
+    <h4>⚠️ Bukan formula khusus akuntansi Indonesia</h4>
+    <p style="margin-bottom:0;">Ini adaptasi umum untuk estimasi risiko, bukan yang dikalibrasi khusus terhadap standar akuntansi/regulasi Indonesia. Pakai sebagai salah satu indikator pelengkap, bukan kesimpulan tunggal soal "aman/tidak aman"nya sebuah saham.</p>
+  </div>
+
+  <h2>Kualitas Laba: kenapa arus kas operasi penting dibanding laba bersih</h2>
+  <p>Laba bersih di laporan laba rugi bisa "dihias" secara legal lewat metode akuntansi (pengakuan pendapatan, penyusutan, dsb) tanpa ada uang kas riil yang berpindah. Arus Kas Operasi lebih sulit direkayasa karena mencatat uang yang benar-benar masuk/keluar. Kategori ini membandingkan keduanya:</p>
+  <ul>
+    <li>Kalau <strong>OCF konsisten &gt; Laba Bersih</strong> di sebagian besar tahun → kualitas laba baik, skor kategori tinggi.</li>
+    <li>Kalau <strong>tahun terbaru: laba bersih positif tapi OCF negatif</strong> → ini red flag spesifik yang otomatis muncul di daftar "Risiko Spesifik Terdeteksi" di bawah hasil skor.</li>
+  </ul>
+
+  <h2>Membaca daftar "Risiko Spesifik Terdeteksi"</h2>
+  <p>Ini bukan bagian dari skor 0-100 — melainkan daftar peringatan tekstual yang dikumpulkan otomatis dari data mentah (DER tinggi, current ratio &lt; 1, ROE negatif, PER &gt; 30x, beta &gt; 1.5, volatilitas &gt; 50%, dst). Baca ini <strong>sebelum</strong> melihat angka skor akhirnya — kadang skor akhirnya masih terlihat "oke" secara rata-rata tertimbang, padahal ada satu risiko spesifik yang cukup serius untuk jadi alasan menahan diri.</p>
+
+  <h2>Batasan metodologi yang wajib kamu tahu</h2>
+  <p>Aplikasi ini sendiri sudah mencantumkan daftar keterbatasan di bawah tombol "Keterbatasan metodologi" pada tab Analisis Saham — tapi layak ditegaskan ulang di sini karena sering terlewat:</p>
+  <ul>
+    <li>Belum menilai kualitas manajemen &amp; tata kelola (riwayat dilusi saham, transaksi afiliasi) — ini tugas kolom Catatan Riset (Bab 9).</li>
+    <li>Belum menilai <em>moat</em>/keunggulan kompetitif — murni kualitatif, tidak bisa dihitung dari laporan keuangan.</li>
+    <li>Company-level saja, belum memperhitungkan konteks makro (suku bunga, siklus komoditas, regulasi sektor).</li>
+    <li>Kategori Peer/Sektor bergantung pada endpoint IDX yang tidak resmi — kalau gagal, kategori ini otomatis dinilai netral (50/100) dengan catatan, bukan dianggap 0.</li>
+  </ul>
+
+</section>
+
+<section class="chapter" id="chapter-bab3">
+  <div class="eyebrow">Bab 3</div>
+  <h1 class="title">Screener Multi-Saham</h1>
+  <p class="lead">Saring puluhan sampai ratusan saham sekaligus, lalu urutkan berdasarkan skor screening yang sama seperti di Bab 1.</p>
+
+  <h2>Cara pakai</h2>
+  <ol class="steps">
+    <li><strong>Isi kode saham manual</strong> (pisahkan koma), atau <strong>muat dari sektor IDX</strong> lewat dropdown "Pilih dari Direktori IDX", atau muat seluruh saham beredar.</li>
+    <li><strong>Jalankan Screening</strong> — progress bar akan menunjukkan saham keberapa yang sedang diproses. Ini diproses <strong>satu per satu</strong>, bukan paralel, jadi untuk "Semua Saham" bisa memakan waktu belasan menit sampai lebih dari 1 jam.</li>
+    <li><strong>Terapkan Filter Lanjutan</strong> (PER maks, PBV maks, ROE min, dst.) untuk mempersempit hasil.</li>
+    <li><strong>Klik baris manapun</strong> di tabel hasil untuk melihat grafik harga &amp; pita valuasi historis saham itu tanpa pindah tab.</li>
+  </ol>
+
+  <div class="card note">
+    <h4>💡 "Tampilkan: Top 10/20/30/50" bukan filter, tapi pemotongan</h4>
+    <p style="margin-bottom:0;">Opsi ini mengurutkan berdasarkan skor tertinggi dulu, baru dipotong sesuai jumlah pilihan — jadi kombinasikan dengan filter lain (PER, ROE, dst.) supaya "Top 10"-nya benar-benar sudah melewati kriteria yang kamu mau, bukan cuma skor tertinggi dari kumpulan saham yang belum tersaring.</p>
+  </div>
+
+  <h2>Cara membaca tabel &amp; grafik perbandingan</h2>
+  <p>Kolom skor &amp; rekomendasi di tabel ini persis sama logikanya dengan Bab 1 — 8 rasio, ambang batas yang sama. Baris dengan garis aksen hijau di kiri berarti skor ≥ 4, garis merah berarti skor ≤ -1. Grafik batang di bawah tabel bisa diganti metriknya lewat dropdown — berguna untuk melihat sebaran satu rasio tertentu di seluruh saham hasil screening sekaligus (misalnya: dari 30 saham perbankan yang lolos filter, seberapa lebar rentang ROE-nya?).</p>
+
+  <div class="card warn-box">
+    <h4>⚠️ Screening cepat ≠ riset selesai</h4>
+    <p style="margin-bottom:0;">Screener ini alat penyaring awal untuk mempersempit ratusan saham jadi belasan kandidat — bukan pengganti Analisis Saham mendalam (Bab 1–2) untuk kandidat yang sudah lolos. Selalu drill-down ke Analisis Saham penuh sebelum memutuskan apa pun.</p>
+  </div>
+
+  <h2>Watchlist</h2>
+  <p>Tombol "💾 Simpan Watchlist" &amp; "📂 Muat Watchlist" menyimpan daftar kode saham (bukan hasil screening-nya) ke file JSON lokal — cocok untuk kelompok saham yang rutin kamu pantau, supaya tidak perlu mengetik ulang tiap kali.</p>
+
+</section>
+
+<section class="chapter" id="chapter-bab4">
+  <div class="eyebrow">Bab 4</div>
+  <h1 class="title">Laporan Keuangan</h1>
+  <p class="lead">Laba rugi, neraca, dan arus kas historis (hingga ±4 tahun terakhir) dalam format tabel &amp; grafik tren.</p>
+
+  <h2>Cara pakai</h2>
+  <p>Ketik kode saham, klik "Ambil Laporan". Tiga sub-tab (Laba Rugi / Neraca / Arus Kas) menampilkan baris-baris utama tiap laporan per tahun, dari yang terbaru ke terlama.</p>
+
+  <h2>Cara membaca tren, bukan angka satu tahun saja</h2>
+  <p>Nilai satu tahun nyaris tidak bermakna tanpa pembanding. Tiga pola paling penting untuk dicek di grafik tren:</p>
+  <ul>
+    <li><strong>Pendapatan naik tapi Laba Bersih turun</strong> — margin sedang tertekan (biaya naik lebih cepat dari penjualan). Cek baris "Beban Pokok Pendapatan" untuk tahu apakah ini soal biaya produksi atau biaya operasional.</li>
+    <li><strong>Laba Bersih naik tapi Arus Kas Operasi stagnan/turun</strong> — sinyal yang sama seperti "Kualitas Laba" di Bab 2; laba di atas kertas belum tentu jadi kas riil.</li>
+    <li><strong>Laba Ditahan turun drastis padahal laba bersih positif</strong> — kemungkinan ada pembagian dividen besar atau kerugian yang belum tercermin di tahun berjalan; cek dulu sebelum menyimpulkan ada masalah.</li>
+  </ul>
+
+  <div class="card note">
+    <h4>💡 Baca berdampingan dengan Bab 2</h4>
+    <p style="margin-bottom:0;">Kategori "Pertumbuhan" dan "Kualitas Laba" pada Skor Investasi Jangka Panjang dihitung otomatis dari data yang sama seperti yang kamu lihat di tab ini — kalau skornya rendah di salah satu kategori itu, tab Laporan Keuangan adalah tempat untuk melihat <em>tahun mana persisnya</em> yang jadi penyebab.</p>
+  </div>
+
+</section>
+
+<section class="chapter" id="chapter-bab5">
+  <div class="eyebrow">Bab 5</div>
+  <h1 class="title">Bandingkan Saham</h1>
+  <p class="lead">2 saham berdampingan lengkap dengan grafik radar yang menormalisasi semua metrik ke skala 0-100.</p>
+
+  <h2>Cara membaca Grafik Radar</h2>
+  <p>Grafik radar <strong>tidak</strong> menampilkan nilai rasio mentah — tiap metrik dinormalisasi relatif <em>hanya antara 2 saham yang dibandingkan</em> (bukan terhadap pasar luas). Artinya: kalau saham A dan B <strong>sama-sama</strong> punya ROE rendah dibanding rata-rata industri, salah satunya tetap akan terlihat "lebih baik" di radar hanya karena lebih tinggi dari yang lain — bukan karena keduanya sudah bagus secara absolut.</p>
+
+  <div class="card danger-box">
+    <h4>⚠️ Kesalahan baca paling umum di fitur ini</h4>
+    <p style="margin-bottom:0;">Radar yang "lebih besar" untuk saham A dibanding B, di 6 sumbu sekaligus, sering disalahartikan sebagai "A jelas lebih baik dari B secara keseluruhan". Padahal enam sumbu itu tidak diberi bobot yang sama pentingnya untuk semua orang — investor income mungkin lebih peduli Dividend Yield (yang bahkan tidak ada di radar default) dibanding Growth. Selalu cek tabel angka mentah di sebelah radar, jangan cuma "luas area"-nya.</p>
+  </div>
+
+  <h2>6 sumbu default &amp; arah "baiknya"</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Sumbu</th><th>Arah "Lebih Baik" di Radar</th></tr></thead>
+      <tbody>
+        <tr><td>ROE</td><td>Semakin luar = semakin tinggi</td></tr>
+        <tr><td>Margin Laba</td><td>Semakin luar = semakin tinggi</td></tr>
+        <tr><td>Growth</td><td>Semakin luar = semakin tinggi</td></tr>
+        <tr><td>PER (murah)</td><td>Semakin luar = semakin <em>rendah</em> PER-nya (dibalik)</td></tr>
+        <tr><td>PBV (murah)</td><td>Semakin luar = semakin <em>rendah</em> PBV-nya (dibalik)</td></tr>
+        <tr><td>DER (rendah)</td><td>Semakin luar = semakin <em>rendah</em> DER-nya (dibalik)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Tiga sumbu terakhir sengaja dibalik arahnya (nilai rasio rendah = titik radar tinggi) supaya "semakin ke luar selalu berarti semakin baik" konsisten di seluruh grafik — bukan berarti PER/PBV/DER dihitung terbalik secara matematis.</p>
+
+</section>
+
+<section class="chapter" id="chapter-bab6">
+  <div class="eyebrow">Bab 6</div>
+  <h1 class="title">Analisis IPO</h1>
+  <p class="lead">Kalkulator valuasi implied dari data prospektus — bisa diisi manual atau upload PDF prospektus untuk ekstraksi otomatis.</p>
+
+  <h2>Cara pakai</h2>
+  <ol class="steps">
+    <li><strong>Upload prospektus</strong> (PDF/TXT) untuk coba isi otomatis, atau <strong>isi manual</strong> dari data di idx.co.id / e-ipo.co.id.</li>
+    <li><strong>Pilih satuan angka</strong> yang kamu masukkan (Juta/Miliar/Rupiah Penuh) — prospektus biasanya melaporkan dalam jutaan atau miliaran, pastikan satuannya cocok supaya hasil tidak salah 1000x atau 1.000.000x lipat.</li>
+    <li><strong>Isi harga penawaran, jumlah saham beredar, dan data keuangan terakhir</strong> (laba, ekuitas, hutang, pendapatan 2 tahun terakhir).</li>
+    <li><strong>(Opsional) Isi PER/PBV rata-rata sektor pembanding</strong> — bisa didapat dari Screener (Bab 3) dengan menyaring beberapa saham sejenis lalu merata-ratakan PER/PBV-nya manual.</li>
+    <li><strong>Klik Hitung Valuasi.</strong></li>
+  </ol>
+
+  <div class="card danger-box">
+    <h4>⚠️ Ekstraksi otomatis dari PDF itu best-effort, bukan pasti benar</h4>
+    <p style="margin-bottom:0;">Fungsi ekstraksi memakai pencarian pola teks (regex) terhadap frasa umum seperti "Harga Penawaran" atau "Jumlah Ekuitas" — format prospektus antar perusahaan bervariasi, jadi field yang terisi otomatis <strong>wajib diperiksa ulang manual</strong> sebelum menghitung. Status "X field terisi otomatis" di layar bukan jaminan akurasi, hanya konfirmasi bahwa pola teksnya berhasil ditemukan.</p>
+  </div>
+
+  <h2>Cara membaca hasilnya</h2>
+  <p>PER &amp; PBV Implied dihitung dari harga penawaran dibagi EPS/BVPS yang kamu masukkan — logika skornya sama persis dengan skor screening di Bab 1 (PER &lt; 15x positif, dst.), plus perbandingan opsional ke rata-rata sektor kalau kamu mengisinya. Ingat: ini murni matematika dari angka yang <strong>kamu</strong> masukkan — kalau data laba/ekuitas yang diketik salah (termasuk salah satuan), hasilnya ikut salah tanpa ada validasi otomatis yang bisa mendeteksinya.</p>
+
+</section>
+
+<section class="chapter" id="chapter-bab7">
+  <div class="eyebrow">Bab 7</div>
+  <h1 class="title">Analisis Teknikal</h1>
+  <p class="lead">Candlestick, Moving Average, RSI, MACD, Bollinger Bands, Stochastic, ADX, Support/Resistance, dan Fibonacci Retracement — dengan interaksi zoom &amp; pan langsung di grafik.</p>
+
+  <div class="card danger-box">
+    <h4>⚠️ Prinsip paling penting di bab ini</h4>
+    <p style="margin-bottom:0;">Tidak ada satu indikator teknikal yang cukup dipakai sendirian. Setiap indikator di bawah ini dirancang untuk saling mengoreksi — RSI overbought yang <em>tidak</em> dikonfirmasi ADX tren kuat, misalnya, punya arti sangat berbeda dari RSI overbought yang <em>dikonfirmasi</em> ADX tinggi. Bagian akhir bab ini (Cara Menggabungkan Sinyal) adalah bagian terpenting, jangan dilewati.</p>
+  </div>
+
+  <h2>Cara pakai</h2>
+  <ol class="steps">
+    <li><strong>Ketik kode saham</strong>, pilih rentang data (3/6/12 bulan), klik "Muat Analisis Teknikal".</li>
+    <li><strong>Scroll mouse di atas candlestick untuk zoom</strong>, klik &amp; geser untuk pan (menggeser tampilan tanpa mengubah rentang data yang dimuat).</li>
+    <li><strong>Hover di atas candle mana pun</strong> untuk melihat Open/High/Low/Close/Volume persis pada tanggal itu, plus nama pola candlestick kalau terdeteksi di tanggal tersebut.</li>
+    <li>Aktifkan <strong>Auto-refresh 60 detik</strong> kalau sedang memantau saham secara aktif — ingat ini bukan data real-time streaming, hanya re-fetch berkala dari yfinance yang tetap punya delay untuk saham IDX.</li>
+  </ol>
+
+  <h2>Moving Average &amp; Golden/Death Cross</h2>
+  <p>SMA20/50/200 adalah rata-rata harga penutupan N hari terakhir — semakin panjang periodenya, semakin "halus" dan lambat bereaksi. Ketika <strong>SMA50 memotong ke atas SMA200</strong>, itu disebut <strong>Golden Cross</strong> — sinyal tren jangka menengah mulai membalik naik. Sebaliknya, <strong>SMA50 memotong ke bawah SMA200</strong> disebut <strong>Death Cross</strong>.</p>
+  <div class="card warn-box">
+    <h4>⚠️ Golden/Death Cross itu indikator "terlambat" (lagging)</h4>
+    <p style="margin-bottom:0;">Karena berbasis rata-rata harga <em>masa lalu</em>, sinyal ini baru muncul <strong>setelah</strong> tren sudah berjalan cukup lama — bukan alat prediksi titik balik. Badge di aplikasi menampilkan tanggal crossover terakhir yang terdeteksi, bukan jaminan pergerakan ke depan.</p>
+  </div>
+
+  <h2>RSI (Relative Strength Index)</h2>
+  <p>Mengukur kecepatan &amp; besaran perubahan harga dalam skala 0-100, untuk menilai kondisi jenuh beli (overbought) atau jenuh jual (oversold).</p>
+
+  <div class="widget">
+    <div class="widget-label"><span class="dot"></span>Diagram Interaktif — Gauge RSI</div>
+    <div class="widget-canvas-wrap"><canvas id="cv-rsi" width="740" height="160"></canvas></div>
+    <div class="widget-controls">
+      <div class="widget-row">
+        <label for="rg-rsi">Nilai RSI (14)</label>
+        <input type="range" id="rg-rsi" min="0" max="100" value="50">
+        <span class="widget-readout" id="rd-rsi">50</span>
+      </div>
+    </div>
+    <div class="widget-explain" id="ex-rsi"></div>
+  </div>
+
+  <div class="card note">
+    <h4>💡 RSI overbought ≠ sinyal jual otomatis</h4>
+    <p style="margin-bottom:0;">Pada saham dengan tren naik yang sangat kuat, RSI bisa bertahan di atas 70 untuk waktu lama — "overbought" di situasi ini sering berarti momentum kuat, bukan sinyal pembalikan segera. RSI paling berguna dikombinasikan dengan ADX (lihat di bawah): RSI ekstrem + ADX rendah (tren lemah/sideways) jauh lebih meyakinkan sebagai sinyal pembalikan dibanding RSI ekstrem + ADX tinggi (tren kuat sedang berlangsung).</p>
+  </div>
+
+  <h2>MACD (Moving Average Convergence Divergence)</h2>
+  <p>Selisih EMA12 dan EMA26 (garis MACD), dibandingkan dengan EMA9 dari selisih itu sendiri (garis Signal). Histogram adalah selisih MACD dikurangi Signal.</p>
+
+  <div class="widget">
+    <div class="widget-label"><span class="dot"></span>Diagram Interaktif — Simulasi Crossover MACD</div>
+    <div class="widget-canvas-wrap"><canvas id="cv-macd" width="740" height="180"></canvas></div>
+    <div class="widget-controls">
+      <div class="btn-toggle-group">
+        <button class="btn-toggle active" data-macd-scenario="bullish">Simulasikan Bullish Crossover</button>
+        <button class="btn-toggle" data-macd-scenario="bearish">Simulasikan Bearish Crossover</button>
+        <button class="btn-toggle" data-macd-scenario="flat">Sideways (Tanpa Sinyal Jelas)</button>
+      </div>
+    </div>
+    <div class="widget-explain" id="ex-macd"></div>
+  </div>
+
+  <h2>Bollinger Bands</h2>
+  <p>Pita di sekitar SMA20 ± 2 standar deviasi harga. Pita yang <strong>menyempit</strong> (squeeze) sering mendahului pergerakan besar (ke arah manapun — bukan indikasi arah). Harga menyentuh pita atas <strong>bukan otomatis</strong> berarti overbought — di tren naik kuat, harga bisa "berjalan menyusuri" pita atas untuk waktu lama.</p>
+
+  <h2>Stochastic Oscillator</h2>
+  <p>Mirip RSI secara konsep (mengukur momentum jenuh beli/jual), tapi berbasis posisi harga penutupan relatif terhadap rentang High-Low 14 hari terakhir, dengan smoothing tambahan (%K &amp; %D). Ambang overbought/oversold-nya lebih lebar dari RSI:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Zona</th><th>Ambang Stochastic</th><th>Ambang RSI (untuk perbandingan)</th></tr></thead>
+      <tbody>
+        <tr><td>Overbought</td><td>≥ 80</td><td>≥ 70</td></tr>
+        <tr><td>Oversold</td><td>≤ 20</td><td>≤ 30</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>ADX (Average Directional Index) — indikator paling sering diabaikan</h2>
+  <p>ADX <strong>tidak</strong> menunjukkan arah tren (naik/turun) — hanya <strong>kekuatan</strong> tren, arah manapun. Inilah kenapa ADX penting sebagai "filter" untuk indikator lain di atas.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Nilai ADX</th><th>Interpretasi</th></tr></thead>
+      <tbody>
+        <tr><td>≥ 25</td><td><span class="badge good">Tren Kuat</span> — sinyal RSI/Stochastic ekstrem lebih mungkin berlanjut (momentum), bukan langsung berbalik</td></tr>
+        <tr><td>20 – 25</td><td><span class="badge mid">Tren Transisi</span> — sinyal dari indikator lain perlu konfirmasi tambahan</td></tr>
+        <tr><td>&lt; 20</td><td><span class="badge bad">Tren Lemah / Sideways</span> — RSI/Stochastic overbought-oversold lebih dapat diandalkan sebagai sinyal pembalikan di kondisi ini</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Support, Resistance &amp; Fibonacci Retracement</h2>
+  <div class="widget">
+    <div class="widget-label"><span class="dot"></span>Diagram Interaktif — Support / Resistance / Fibonacci</div>
+    <div class="widget-canvas-wrap"><canvas id="cv-fib" width="740" height="280"></canvas></div>
+    <div class="widget-explain" id="ex-fib">Arahkan kursor ke salah satu garis level pada grafik di atas untuk melihat penjelasannya.</div>
+  </div>
+  <p>Level Support &amp; Resistance dihitung otomatis dari titik-titik pivot (swing high/low) harga historis yang dikelompokkan berdasarkan kedekatan harga — <strong>estimasi statistik</strong>, bukan level pasti yang "dijamin" akan menahan/menembus harga. Fibonacci Retracement dihitung dari swing high dan swing low <strong>pada periode data yang sedang ditampilkan</strong> — artinya level ini <strong>berubah</strong> kalau kamu mengganti rentang data (3/6/12 bulan) di dropdown, karena titik swing high/low-nya ikut berubah.</p>
+
+  <h2>Pola Candlestick</h2>
+  <p>Aplikasi mendeteksi pola umum secara heuristik (rasio body/wick candle): Doji, Hammer, Shooting Star, Bullish/Bearish Engulfing — ditandai segitiga kecil hijau (bullish) atau merah (bearish) di atas/bawah candle terkait.</p>
+  <div class="card danger-box">
+    <h4>⚠️ Deteksi pola ini bukan hasil machine learning yang tervalidasi statistik</h4>
+    <p style="margin-bottom:0;">Ini murni aturan geometris (perbandingan ukuran body vs wick candle) — sama sekali belum divalidasi terhadap data historis untuk mengukur seberapa sering pola ini benar-benar diikuti pergerakan sesuai namanya di pasar Indonesia. Perlakukan sebagai penanda visual untuk riset lebih lanjut, bukan sinyal yang berdiri sendiri.</p>
+  </div>
+
+  <h2>Cara Menggabungkan Semua Sinyal (bagian terpenting bab ini)</h2>
+  <p>Urutan pemeriksaan yang disarankan ketika membuka tab ini untuk satu saham:</p>
+  <ol class="steps">
+    <li><strong>Cek ADX dulu.</strong> Ini menentukan bagaimana kamu harus menafsirkan semua indikator lain di bawah. Tren kuat (≥25) atau lemah (&lt;20)?</li>
+    <li><strong>Cek posisi harga vs SMA50 &amp; SMA200.</strong> Ini konteks tren jangka menengah-panjang tempat semua sinyal jangka pendek lainnya terjadi.</li>
+    <li><strong>Cek RSI &amp; Stochastic bersamaan.</strong> Kalau keduanya sepakat (sama-sama oversold atau overbought), sinyalnya lebih meyakinkan dibanding kalau cuma satu yang ekstrem.</li>
+    <li><strong>Cek MACD untuk konfirmasi momentum arah.</strong> MACD bullish (di atas Signal) yang selaras dengan tren SMA naik memperkuat kesimpulan, bukan bertentangan.</li>
+    <li><strong>Terakhir, lihat Support/Resistance &amp; Fibonacci</strong> untuk menentukan level harga spesifik — bukan untuk menentukan arah (itu tugas 4 langkah sebelumnya).</li>
+  </ol>
+  <p>Kalau kelima langkah ini saling bertentangan (misal RSI oversold tapi tren SMA turun kuat dengan ADX tinggi), itu bukan bug — itu memang sering terjadi di pasar riil, dan artinya kondisinya ambigu. Jangan paksa mencari satu kesimpulan tunggal dari data yang memang sedang tidak sepakat.</p>
+
+</section>
+
+<section class="chapter" id="chapter-bab8">
+  <div class="eyebrow">Bab 8</div>
+  <h1 class="title">Portofolio &amp; Grafik Performa</h1>
+  <p class="lead">Catat kepemilikan saham, pantau untung/rugi otomatis, dan lihat grafik nilai portofolio dari waktu ke waktu.</p>
+
+  <h2>Dua sistem data yang terpisah — ini penting dipahami</h2>
+  <div class="card warn-box">
+    <h4>⚠️ "Daftar Kepemilikan" dan "Grafik Performa" TIDAK saling terhubung otomatis</h4>
+    <p style="margin-bottom:0;">Form "Tambah Saham ke Portofolio" (qty + total modal) hanya mengisi tabel kepemilikan &amp; ringkasan untung/rugi <em>saat ini</em>. Grafik performa historis di atasnya memakai data <strong>terpisah</strong>: transaksi bertanggal yang dicatat lewat form "Catat Transaksi (untuk grafik ini)". Kalau kamu hanya mengisi form pertama, grafik performa akan tetap kosong.</p>
+  </div>
+
+  <h2>Cara pakai — Daftar Kepemilikan</h2>
+  <ol class="steps">
+    <li>Isi kode saham, jumlah lembar, dan total modal yang dibelanjakan (bukan harga per lembar — total rupiah keseluruhan).</li>
+    <li>Kalau kode saham yang sama ditambahkan lagi, sistem otomatis <strong>menggabungkan</strong> jadi satu baris (rata-rata harga beli terhitung ulang), bukan membuat baris duplikat.</li>
+    <li>Klik "🔄 Refresh Harga" untuk update harga terkini dan menghitung ulang untung/rugi.</li>
+  </ol>
+
+  <h2>Cara pakai — Grafik Performa</h2>
+  <ol class="steps">
+    <li>Buka bagian "Catat Transaksi (untuk grafik ini)".</li>
+    <li>Isi tiap transaksi <strong>beli/jual dengan tanggal spesifiknya</strong> — bukan agregat, tapi transaksi individual (kalau kamu beli BBCA 3 kali di 3 tanggal berbeda, catat sebagai 3 baris transaksi terpisah).</li>
+    <li>Grafik otomatis dihitung ulang setelah transaksi ditambah/dihapus — 2 garis akan muncul: <strong>Nilai Portofolio</strong> (hijau, mengikuti harga pasar) dan <strong>Modal Kumulatif</strong> (kuning putus-putus, jumlah uang yang sudah kamu tanam).</li>
+  </ol>
+
+  <h2>Cara membaca grafiknya</h2>
+  <ul>
+    <li><strong>Garis hijau di atas garis kuning</strong> = portofolio kamu sedang untung secara total (belum direalisasi).</li>
+    <li><strong>Garis hijau memotong ke bawah garis kuning</strong> = portofolio sedang rugi di titik waktu itu.</li>
+    <li><strong>Garis kuning yang naik bertahap</strong> = kamu menambah modal (transaksi beli baru) — bukan pertumbuhan investasi, murni setoran baru.</li>
+    <li><strong>Garis kuning yang turun</strong> = ada transaksi jual yang mengurangi modal kumulatif tercatat.</li>
+  </ul>
+
+  <div class="card note">
+    <h4>💡 Resolusi grafik mingguan, di-cache 1x per hari</h4>
+    <p style="margin-bottom:0;">Grafik direkonstruksi dari harga historis mingguan (bukan harian) untuk performa yang ringan, dan hasilnya disimpan di cache lokal supaya tidak dihitung ulang tiap kali tab dibuka — hanya dihitung ulang otomatis kalau kamu menambah/menghapus transaksi, atau berganti hari, atau menekan "🔄 Hitung Ulang" manual.</p>
+  </div>
+
+</section>
+
+<section class="chapter" id="chapter-bab9">
+  <div class="eyebrow">Bab 9</div>
+  <h1 class="title">Catatan Riset Kualitatif</h1>
+  <p class="lead">Tempat mengisi apa yang tidak bisa dihitung dari angka — dan ini bukan fitur pelengkap, tapi pelengkap wajib dari semua skor kuantitatif di bab-bab sebelumnya.</p>
+
+  <h2>Kenapa modul ini ada</h2>
+  <p>Bab 2 sudah menyebutkan: skor kuantitatif belum menilai <em>moat</em>, kualitas manajemen, dan posisi industri secara kualitatif. Modul ini menyediakan 5 kolom terstruktur untuk mengisi kekosongan itu secara konsisten, per saham, supaya risetmu bisa dibaca ulang beberapa bulan kemudian tanpa lupa alasan awalnya.</p>
+
+  <h2>Cara mengisi 5 kolom dengan efektif</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Kolom</th><th>Pertanyaan Panduan</th></tr></thead>
+      <tbody>
+        <tr><td>🏰 Moat</td><td>Kalau ada kompetitor baru dengan modal besar masuk sektor ini besok, seberapa sulit mereka merebut pelanggan perusahaan ini?</td></tr>
+        <tr><td>👤 Manajemen</td><td>Apakah keputusan manajemen 3-5 tahun terakhir (akuisisi, rights issue, capex) terbukti menguntungkan pemegang saham minoritas?</td></tr>
+        <tr><td>🏭 Posisi Industri</td><td>Apakah industrinya sendiri bertumbuh, atau perusahaan ini cuma "kebagian kue" dari industri yang menyusut?</td></tr>
+        <tr><td>⚠️ Risiko Utama</td><td>Apa satu hal yang, kalau terjadi, akan membuat tesis investasi ini langsung gugur?</td></tr>
+        <tr><td>🎯 Kesimpulan</td><td>Tuliskan juga <em>kondisi kegagalan</em>-nya — bukan cuma kenapa kamu tertarik, tapi kapan kamu akan mengaku salah</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card note">
+    <h4>💡 Kolom "Kesimpulan" paling penting justru bagian kondisi kegagalannya</h4>
+    <p style="margin-bottom:0;">Riset yang hanya berisi alasan optimis rentan terhadap <em>confirmation bias</em> — kamu cuma akan mencari data yang mendukung keputusan yang sudah dibuat. Menuliskan "tesis ini gagal kalau X terjadi" di awal membuatmu lebih mudah mengenali kapan harus keluar, bukan bertahan karena sudah terlanjur menulis panjang alasan masuk.</p>
+  </div>
+
+  <h2>Akses cepat dari tab Analisis Saham</h2>
+  <p>Setelah menganalisis satu saham di Bab 1, tombol "📝 Tambah/Lihat Catatan Riset Kualitatif" langsung membawa kode saham itu ke form di sini — kalau catatannya sudah ada sebelumnya, otomatis dimuat untuk diedit; kalau belum, form kosong dengan kode saham sudah terisi.</p>
+
+</section>
+
+<section class="chapter" id="chapter-bab10">
+  <div class="eyebrow">Bab 10</div>
+  <h1 class="title">Laporan Gabungan PDF</h1>
+  <p class="lead">Satu tombol, satu file PDF berisi Fundamental + Skor Jangka Panjang + Teknikal + Catatan Riset — untuk satu saham.</p>
+
+  <h2>Cara pakai</h2>
+  <p>Tombol "📄 Ekspor Laporan Riset Lengkap (PDF)" ada di tab Analisis Saham, di bawah tombol Catatan Riset. Tombol ini aktif setelah kamu berhasil menganalisis satu saham (Bab 1).</p>
+
+  <h2>Apa saja yang otomatis masuk, dan syaratnya</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Bagian Laporan</th><th>Syarat Supaya Masuk ke PDF</th></tr></thead>
+      <tbody>
+        <tr><td>1. Analisis Fundamental</td><td>Selalu ada — ini yang mengaktifkan tombolnya</td></tr>
+        <tr><td>2. Skor Investasi Jangka Panjang</td><td>Hanya masuk kalau kamu <strong>sudah klik "Hitung Skor Jangka Panjang"</strong> untuk saham yang sama, di sesi yang sama, sebelum ekspor</td></tr>
+        <tr><td>3. Ringkasan Teknikal</td><td>Diambil otomatis saat tombol diklik (tidak perlu buka tab Teknikal dulu) — tapi butuh histori harga cukup, kalau saham baru IPO bagian ini bisa kosong</td></tr>
+        <tr><td>4. Catatan Riset Kualitatif</td><td>Hanya masuk kalau kamu sudah pernah menyimpan catatan untuk kode saham itu di Bab 9</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card note">
+    <h4>💡 Urutan pengerjaan yang disarankan sebelum ekspor</h4>
+    <p style="margin-bottom:0;">Supaya laporan benar-benar lengkap (4 dari 4 bagian), urutan paling efisien: (1) Analisis Saham → (2) Hitung Skor Jangka Panjang di tab yang sama → (3) isi Catatan Riset lewat tombol pintasan → (4) kembali ke Analisis Saham, klik Ekspor Laporan Lengkap. Bagian Teknikal otomatis ikut tanpa langkah tambahan.</p>
+  </div>
+
+  <div class="card warn-box">
+    <h4>⚠️ Kalau satu bagian tidak ada datanya, PDF tetap jalan</h4>
+    <p style="margin-bottom:0;">Fitur ini dirancang tidak gagal total hanya karena satu bagian kosong — bagian yang tidak tersedia (misal belum menghitung Skor Jangka Panjang) otomatis dilewati, bukan membuat seluruh ekspor error. Jadi kalau laporan yang kamu dapat cuma berisi 2-3 bagian, cek dulu apakah langkah di atas sudah lengkap dikerjakan.</p>
+  </div>
+
+</section>
+
+<section class="chapter" id="chapter-bab11">
+  <div class="eyebrow">Bab 11 · Baca Berkala</div>
+  <h1 class="title">Kesalahan Umum &amp; Cara Menghindarinya</h1>
+  <p class="lead">Kumpulan kesalahan baca yang paling sering terjadi lintas semua modul — bukan cuma sekali dibaca di awal, tapi ditinjau ulang secara berkala.</p>
+
+  <h3>1. Menganggap skor tinggi = rekomendasi beli</h3>
+  <p>Skor screening (Bab 1) dan Skor Jangka Panjang (Bab 2) adalah <strong>ringkasan rasio</strong>, bukan kesimpulan investasi. Skor tinggi berarti "rasio-rasio yang diukur secara historis terlihat sehat" — bukan "harga akan naik". Harga saham juga dipengaruhi sentimen pasar, likuiditas, dan berita yang tidak ada dalam rasio fundamental apa pun.</p>
+
+  <h3>2. Membandingkan PER/PBV lintas sektor tanpa konteks</h3>
+  <p>PER 25x itu mahal untuk bank, tapi bisa jadi wajar untuk perusahaan teknologi bertumbuh cepat. Selalu gunakan Peer/Sektor (Bab 2) atau Screener dengan filter sektor (Bab 3) untuk perbandingan yang sepadan — jangan bandingkan PER lintas sektor secara langsung.</p>
+
+  <h3>3. Mengabaikan ukuran sampel di "Konsistensi Laba &amp; Dividen"</h3>
+  <p>Kategori ini menilai maksimal 5 tahun ke belakang. Untuk perusahaan yang baru IPO 2-3 tahun, "konsistensi 5 tahun" itu secara matematis tidak bisa dinilai penuh — cek jumlah tahun data yang tersedia sebelum menganggap skornya representatif.</p>
+
+  <h3>4. Menganggap data IDX &amp; peer sektor selalu tersedia</h3>
+  <p>Endpoint IDX yang dipakai untuk direktori sektor &amp; laporan resmi (Bab 1, Bab 2, Bab 3) tidak resmi dan bisa gagal kapan saja. Kalau kategori "Peer/Sektor" menampilkan skor netral 50/100 dengan catatan "data tidak ditemukan", itu <strong>bukan</strong> penilaian netral yang bermakna — itu ketiadaan data yang kebetulan diberi nilai default netral.</p>
+
+  <h3>5. Memakai satu indikator teknikal secara terisolasi</h3>
+  <p>Sudah dibahas panjang di Bab 7 — RSI, MACD, Stochastic, ADX dirancang saling melengkapi. Sinyal dari satu indikator saja, tanpa konfirmasi ADX (kekuatan tren), adalah kesalahan baca paling umum di modul teknikal manapun, bukan cuma di aplikasi ini.</p>
+
+  <h3>6. Salah satuan saat mengisi data manual (IPO, Portofolio)</h3>
+  <p>Kalkulator IPO (Bab 6) meminta kamu memilih satuan (Juta/Miliar/Rupiah Penuh) — kalau prospektus melaporkan dalam miliar tapi kamu pilih "Juta Rupiah", hasilnya salah 1000x lipat tanpa peringatan otomatis apa pun. Selalu cek ulang satuan sebelum menghitung.</p>
+
+  <h3>7. Menganggap grafik Pita Valuasi &amp; Radar Perbandingan sebagai data historis presisi</h3>
+  <p>Sudah disinggung di Bab 1 dan Bab 5 — Pita Valuasi PER/PBV historis adalah estimasi (EPS/BVPS saat ini diterapkan ke harga historis), dan Radar Perbandingan dinormalisasi hanya antar 2 saham yang dibandingkan, bukan terhadap pasar luas. Keduanya alat bantu visual, bukan angka historis riil.</p>
+
+  <h3>8. Lupa bahwa Catatan Riset Kualitatif (Bab 9) bukan otomatis terisi</h3>
+  <p>Ini satu-satunya bagian aplikasi yang murni bergantung pada input manual kamu sendiri — tidak ada skor otomatis yang "menutupi" kekosongannya. Saham dengan skor kuantitatif tinggi tapi kolom Catatan Riset kosong berarti separuh riset (bagian kualitatif) belum dikerjakan sama sekali, bukan berarti tidak relevan.</p>
+
+</section>
+
+<section class="chapter" id="chapter-lampiran">
+  <div class="eyebrow">Lampiran</div>
+  <h1 class="title">Glosarium Istilah</h1>
+  <p class="lead">Referensi cepat istilah yang dipakai di seluruh buku ini.</p>
+
+  <dl class="glossary">
+    <dt>PER (Price to Earnings Ratio)</dt><dd>Harga saham dibagi laba bersih per saham (EPS). Mengukur berapa tahun laba dibutuhkan untuk "balik modal" di harga saat ini.</dd>
+    <dt>PBV (Price to Book Value)</dt><dd>Harga saham dibagi nilai buku aset bersih per saham.</dd>
+    <dt>PEG Ratio</dt><dd>PER dibagi laju pertumbuhan laba tahunan — menghubungkan valuasi dengan pertumbuhan.</dd>
+    <dt>ROE (Return on Equity)</dt><dd>Laba bersih dibagi total ekuitas — efisiensi menghasilkan laba dari modal pemegang saham.</dd>
+    <dt>ROA (Return on Assets)</dt><dd>Laba bersih dibagi total aset — mengabaikan struktur pendanaan (hutang vs ekuitas).</dd>
+    <dt>DER (Debt to Equity Ratio)</dt><dd>Total hutang dibagi ekuitas — indikator leverage/beban hutang.</dd>
+    <dt>Current Ratio</dt><dd>Aset lancar dibagi liabilitas lancar — kemampuan bayar kewajiban jangka pendek.</dd>
+    <dt>EPS (Earnings per Share)</dt><dd>Laba bersih dibagi jumlah saham beredar.</dd>
+    <dt>EV/EBITDA</dt><dd>Nilai perusahaan (Enterprise Value) dibagi laba sebelum bunga, pajak, depresiasi &amp; amortisasi — alternatif PER yang memperhitungkan struktur hutang.</dd>
+    <dt>Altman Z''-Score</dt><dd>Formula estimasi risiko kebangkrutan berbasis modal kerja, laba ditahan, EBIT, dan nilai pasar terhadap aset &amp; liabilitas.</dd>
+    <dt>Free Cash Flow (FCF)</dt><dd>Arus Kas Operasi dikurangi Belanja Modal (CapEx) — kas yang benar-benar "bebas" dipakai setelah investasi rutin.</dd>
+    <dt>Interest Coverage Ratio (ICR)</dt><dd>Laba operasional dibagi beban bunga — kemampuan membayar bunga hutang dari laba operasional.</dd>
+    <dt>SMA (Simple Moving Average)</dt><dd>Rata-rata harga penutupan N hari terakhir.</dd>
+    <dt>Golden Cross / Death Cross</dt><dd>SMA jangka pendek memotong ke atas (Golden) atau ke bawah (Death) SMA jangka panjang.</dd>
+    <dt>RSI (Relative Strength Index)</dt><dd>Indikator momentum 0-100 untuk mengukur kondisi jenuh beli/jual.</dd>
+    <dt>MACD</dt><dd>Selisih EMA12 &amp; EMA26, dibandingkan garis Signal (EMA9 dari selisih itu) — indikator momentum &amp; tren.</dd>
+    <dt>Bollinger Bands</dt><dd>Pita di sekitar SMA20 ± 2 standar deviasi harga — mengukur volatilitas relatif.</dd>
+    <dt>Stochastic Oscillator</dt><dd>Posisi harga penutupan relatif terhadap rentang High-Low 14 hari, dengan smoothing %K &amp; %D.</dd>
+    <dt>ADX (Average Directional Index)</dt><dd>Mengukur kekuatan tren (bukan arahnya) dalam skala 0-100+.</dd>
+    <dt>Support / Resistance</dt><dd>Level harga historis tempat harga cenderung berhenti turun (support) atau berhenti naik (resistance).</dd>
+    <dt>Fibonacci Retracement</dt><dd>Level harga hasil pembagian rasio Fibonacci dari swing high ke swing low (atau sebaliknya) pada periode data tertentu.</dd>
+    <dt>Persentil (dalam Pita Valuasi)</dt><dd>Persentase waktu historis di mana rasio (PER/PBV) lebih rendah dari nilai saat ini.</dd>
+  </dl>
+
+</section>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   DAFTAR BAB
+============================================================ */
+const CHAPTERS = [
+  {id:'sampul', group:null, label:'Sampul'},
+  {id:'pendahuluan', group:'Mulai Dari Sini', label:'Pendahuluan & Disclaimer'},
+  {id:'navigasi', group:'Mulai Dari Sini', label:'Mengenal Antarmuka'},
+  {id:'bab1', group:'Bab 1–2 · Riset Dasar', label:'Analisis Saham (Fundamental)'},
+  {id:'bab2', group:'Bab 1–2 · Riset Dasar', label:'Skor Investasi Jangka Panjang'},
+  {id:'bab3', group:'Bab 3–5 · Multi Saham', label:'Screener Multi-Saham'},
+  {id:'bab4', group:'Bab 3–5 · Multi Saham', label:'Laporan Keuangan'},
+  {id:'bab5', group:'Bab 3–5 · Multi Saham', label:'Bandingkan Saham'},
+  {id:'bab6', group:'Bab 6 · Valuasi Khusus', label:'Analisis IPO'},
+  {id:'bab7', group:'Bab 7 · Teknikal', label:'Analisis Teknikal'},
+  {id:'bab8', group:'Bab 8–9 · Portofolio', label:'Portofolio & Grafik Performa'},
+  {id:'bab9', group:'Bab 8–9 · Portofolio', label:'Catatan Riset Kualitatif'},
+  {id:'bab10', group:'Bab 10 · Ekspor', label:'Laporan Gabungan PDF'},
+  {id:'bab11', group:'Bab 11 · Akurasi', label:'Kesalahan Umum & Cara Menghindarinya'},
+  {id:'lampiran', group:'Lampiran', label:'Glosarium Istilah'},
+];
+
+const nav = document.getElementById('bookNav');
+let lastGroup = null;
+CHAPTERS.forEach((c,i)=>{
+  if(c.group && c.group !== lastGroup){
+    const label = document.createElement('div');
+    label.className = 'nav-label';
+    label.textContent = c.group;
+    nav.appendChild(label);
+    lastGroup = c.group;
+  }
+  const btn = document.createElement('button');
+  btn.className = 'navitem';
+  btn.dataset.target = c.id;
+  btn.innerHTML = c.id==='sampul' ? c.label : `<span class="nnum">${String(i).padStart(2,'0')}</span><span>${c.label}</span>`;
+  btn.addEventListener('click', ()=>goToChapter(c.id));
+  nav.appendChild(btn);
+});
+
+function goToChapter(id){
+  document.querySelectorAll('.navitem').forEach(b=>b.classList.toggle('active', b.dataset.target===id));
+  document.querySelectorAll('.chapter').forEach(s=>s.classList.toggle('active', s.id==='chapter-'+id));
+  document.getElementById('contentWrap').scrollIntoView({behavior:'instant'});
+  window.scrollTo(0,0);
+  document.getElementById('sidebar').classList.remove('open');
+}
+document.getElementById('hamburgerBtn').addEventListener('click', ()=>{
+  document.getElementById('sidebar').classList.toggle('open');
+});
+
+function footerNav(currentId){
+  const idx = CHAPTERS.findIndex(c=>c.id===currentId);
+  const prev = CHAPTERS[idx-1], next = CHAPTERS[idx+1];
+  return `<div class="book-footer-nav">
+    <button ${!prev?'disabled':''} onclick="goToChapter('${prev?prev.id:''}')">&larr; ${prev?prev.label:''}</button>
+    <button ${!next?'disabled':''} onclick="goToChapter('${next?next.id:''}')">${next?next.label:''} &rarr;</button>
+  </div>`;
+}
+
+/* Pasang navigasi bawah (Sebelumnya/Berikutnya) otomatis ke tiap bab */
+CHAPTERS.forEach(c=>{
+  const section = document.getElementById('chapter-'+c.id);
+  if(section) section.insertAdjacentHTML('beforeend', footerNav(c.id));
+});
+
+/* Aktifkan bab pertama secara default */
+goToChapter('sampul');
+</script>
+
+<script>
+/* ============================================================
+   WIDGET INTERAKTIF — util gambar dasar
+============================================================ */
+function setupCanvas(id){
+  const canvas = document.getElementById(id);
+  if(!canvas) return null;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const cssW = canvas.width, cssH = canvas.height;
+  canvas.style.width = '100%';
+  canvas.style.height = cssH + 'px';
+  canvas.width = cssW * dpr; canvas.height = cssH * dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  return {ctx, w:cssW, h:cssH};
+}
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+
+/* ============================================================
+   WIDGET 1 — Persentil PER (Bab 1)
+============================================================ */
+(function(){
+  const c = setupCanvas('cv-per-percentile'); if(!c) return;
+  const {ctx,w,h} = c;
+  const slider = document.getElementById('rg-per-percentile');
+  const readout = document.getElementById('rd-per-percentile');
+  const explain = document.getElementById('ex-per-percentile');
+
+  function draw(pct){
+    ctx.clearRect(0,0,w,h);
+    const trackX = 30, trackY = 55, trackW = w-60, trackH = 14;
+    const grad = ctx.createLinearGradient(trackX,0,trackX+trackW,0);
+    grad.addColorStop(0, '#2DD4A7'); grad.addColorStop(0.5, '#F5B942'); grad.addColorStop(1, '#FF6B6B');
+    roundRect(ctx, trackX, trackY, trackW, trackH, 7); ctx.fillStyle = grad; ctx.fill();
+
+    ['0%','25% (murah)','50%','75% (mahal)','100%'].forEach((lbl,i)=>{
+      const x = trackX + trackW * (i/4);
+      ctx.strokeStyle = 'rgba(233,238,249,0.25)'; ctx.beginPath(); ctx.moveTo(x,trackY-4); ctx.lineTo(x,trackY+trackH+4); ctx.stroke();
+      ctx.fillStyle = '#5b6480'; ctx.font = '10px JetBrains Mono'; ctx.textAlign = i===0?'left':(i===4?'right':'center');
+      ctx.fillText(lbl, x, trackY+trackH+18);
+    });
+
+    const markerX = trackX + trackW * (pct/100);
+    ctx.beginPath(); ctx.moveTo(markerX, trackY-10); ctx.lineTo(markerX-7, trackY-22); ctx.lineTo(markerX+7, trackY-22); ctx.closePath();
+    ctx.fillStyle = '#E9EEF9'; ctx.fill();
+    ctx.fillStyle = '#E9EEF9'; ctx.font = 'bold 12px JetBrains Mono'; ctx.textAlign = 'center';
+    ctx.fillText(pct+'%', markerX, trackY-27);
+  }
+
+  function explainText(pct){
+    if(pct <= 25) return `<strong>Persentil ${pct}% — Tergolong murah secara historis.</strong> PER saat ini lebih rendah dari ${pct}% titik data harga historisnya sendiri. Ini sinyal awal yang layak digali lebih dalam — tapi cek dulu apakah "murah"-nya karena memang undervalued, atau karena ada penurunan kinerja yang membuat pasar mendiskon harganya secara wajar.`;
+    if(pct >= 75) return `<strong>Persentil ${pct}% — Tergolong mahal secara historis.</strong> PER saat ini lebih tinggi dari ${pct}% titik data harga historisnya sendiri. Bukan berarti harus dihindari — bisa jadi pasar sedang menghargai ekspektasi pertumbuhan yang lebih tinggi. Cek PEG Ratio (Bab 1) untuk melihat apakah valuasi ini sepadan dengan laju pertumbuhan laba.`;
+    return `<strong>Persentil ${pct}% — Berada di tengah rentang historisnya.</strong> Tidak murah, tidak mahal dibanding dirinya sendiri di masa lalu. Di titik ini, sinyal valuasi historis relatif netral — bobot keputusan sebaiknya condong ke rasio fundamental lain (ROE, DER, growth) daripada ke posisi persentil ini saja.`;
+  }
+
+  slider.addEventListener('input', ()=>{
+    const pct = parseInt(slider.value);
+    readout.textContent = pct+'%';
+    draw(pct);
+    explain.innerHTML = explainText(pct);
+  });
+  draw(50); explain.innerHTML = explainText(50);
+})();
+
+/* ============================================================
+   WIDGET 2 — Zona Altman Z''-Score (Bab 2)
+============================================================ */
+(function(){
+  const c = setupCanvas('cv-zscore'); if(!c) return;
+  const {ctx,w,h} = c;
+  const slider = document.getElementById('rg-zscore');
+  const readout = document.getElementById('rd-zscore');
+  const explain = document.getElementById('ex-zscore');
+  const maxZ = 12;
+
+  function draw(z){
+    ctx.clearRect(0,0,w,h);
+    const trackX = 30, trackY = 60, trackW = w-60, trackH = 22;
+    const zoneDistressW = trackW * (4.15/maxZ);
+    const zoneGreyW = trackW * ((8.15-4.15)/maxZ);
+    const zoneSafeW = trackW - zoneDistressW - zoneGreyW;
+
+    ctx.fillStyle = 'rgba(255,107,107,0.35)'; roundRect(ctx, trackX, trackY, zoneDistressW, trackH, 0); ctx.fill();
+    ctx.fillStyle = 'rgba(245,185,66,0.35)'; ctx.fillRect(trackX+zoneDistressW, trackY, zoneGreyW, trackH);
+    ctx.fillStyle = 'rgba(45,212,167,0.35)'; ctx.fillRect(trackX+zoneDistressW+zoneGreyW, trackY, zoneSafeW, trackH);
+    ctx.strokeStyle = 'rgba(233,238,249,0.15)'; ctx.strokeRect(trackX, trackY, trackW, trackH);
+
+    ctx.font = '10px JetBrains Mono'; ctx.fillStyle = '#8b96ac'; ctx.textAlign='center';
+    ctx.fillText('Distress (< 4.15)', trackX+zoneDistressW/2, trackY+trackH+16);
+    ctx.fillText('Abu-abu (4.15–8.15)', trackX+zoneDistressW+zoneGreyW/2, trackY+trackH+16);
+    ctx.fillText('Aman (> 8.15)', trackX+zoneDistressW+zoneGreyW+zoneSafeW/2, trackY+trackH+16);
+
+    const markerX = trackX + trackW * (Math.min(z,maxZ)/maxZ);
+    ctx.beginPath(); ctx.moveTo(markerX, trackY-6); ctx.lineTo(markerX-7, trackY-18); ctx.lineTo(markerX+7, trackY-18); ctx.closePath();
+    ctx.fillStyle = '#E9EEF9'; ctx.fill();
+    ctx.font = 'bold 13px JetBrains Mono'; ctx.textAlign='center';
+    ctx.fillText('Z = '+z.toFixed(1), markerX, trackY-23);
+  }
+
+  function explainText(z){
+    if(z > 8.15) return `<strong>Zona Aman.</strong> Struktur modal kerja, laba ditahan, dan profitabilitas terhadap total aset menunjukkan jarak yang jauh dari risiko gagal bayar berdasarkan formula ini. Tetap bukan jaminan mutlak — Z-Score tidak memasukkan faktor kualitatif seperti tata kelola atau risiko litigasi.`;
+    if(z > 4.15) return `<strong>Zona Abu-abu (waspada).</strong> Tidak langsung berbahaya, tapi juga tidak cukup kuat untuk diabaikan. Kombinasikan dengan kategori Kesehatan Keuangan (DER, Current Ratio) di Bab 2 untuk melihat komponen mana yang menyeret skor ke zona ini.`;
+    return `<strong>Zona Distress (risiko tinggi).</strong> Formula ini menandakan kombinasi modal kerja lemah, laba ditahan minim/negatif, dan/atau EBIT rendah relatif terhadap aset. Ini sinyal untuk memeriksa laporan keuangan resmi secara manual (Bab 4) sebelum mengambil keputusan apa pun.`;
+  }
+
+  slider.addEventListener('input', ()=>{
+    const z = parseFloat(slider.value);
+    readout.textContent = z.toFixed(1);
+    draw(z);
+    explain.innerHTML = explainText(z);
+  });
+  draw(6); explain.innerHTML = explainText(6);
+})();
+
+/* ============================================================
+   WIDGET 3 — Gauge RSI (Bab 7)
+============================================================ */
+(function(){
+  const c = setupCanvas('cv-rsi'); if(!c) return;
+  const {ctx,w,h} = c;
+  const slider = document.getElementById('rg-rsi');
+  const readout = document.getElementById('rd-rsi');
+  const explain = document.getElementById('ex-rsi');
+
+  function draw(v){
+    ctx.clearRect(0,0,w,h);
+    const cx = w/2, cy = h-25, radius = 130;
+    const startAngle = Math.PI, endAngle = 0;
+
+    function arcSeg(a0,a1,color){
+      ctx.beginPath(); ctx.arc(cx,cy,radius,a0,a1,false); ctx.lineWidth = 22; ctx.strokeStyle = color; ctx.stroke();
+    }
+    const aFor = (val)=> Math.PI - (Math.PI * (val/100));
+    arcSeg(aFor(0), aFor(30), 'rgba(45,212,167,0.85)');
+    arcSeg(aFor(30), aFor(70), 'rgba(245,185,66,0.55)');
+    arcSeg(aFor(70), aFor(100), 'rgba(255,107,107,0.85)');
+
+    ctx.font = '10px JetBrains Mono'; ctx.fillStyle = '#8b96ac'; ctx.textAlign = 'center';
+    ctx.fillText('0', cx-radius-4, cy+14);
+    ctx.fillText('30', cx - radius*Math.cos(aFor(30)), cy - radius*Math.sin(aFor(30)) - 10);
+    ctx.fillText('70', cx - radius*Math.cos(aFor(70)), cy - radius*Math.sin(aFor(70)) - 10);
+    ctx.fillText('100', cx+radius+8, cy+14);
+
+    const angle = aFor(v);
+    const nx = cx - (radius-30) * Math.cos(angle), ny = cy - (radius-30) * Math.sin(angle);
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(nx,ny); ctx.strokeStyle = '#E9EEF9'; ctx.lineWidth = 3; ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx,cy,6,0,Math.PI*2); ctx.fillStyle = '#E9EEF9'; ctx.fill();
+
+    ctx.font = 'bold 26px JetBrains Mono'; ctx.fillStyle = '#E9EEF9'; ctx.textAlign='center';
+    ctx.fillText(v, cx, cy-45);
+  }
+
+  function explainText(v){
+    if(v >= 70) return `<strong>RSI ${v} — Overbought.</strong> Harga baru saja mengalami kenaikan yang cukup cepat/besar relatif terhadap penurunan dalam 14 hari terakhir. Cek ADX (di bawah) sebelum menyimpulkan ini sinyal pembalikan — RSI tinggi di tren kuat sering berarti momentum berlanjut, bukan segera berbalik.`;
+    if(v <= 30) return `<strong>RSI ${v} — Oversold.</strong> Harga baru saja mengalami penurunan yang cukup cepat/besar relatif terhadap kenaikan. Berpotensi rebound teknikal, tapi juga bisa berarti tren turun kuat yang masih berlanjut — kembali, cek ADX untuk konteks kekuatan tren sebelum menyimpulkan.`;
+    return `<strong>RSI ${v} — Netral.</strong> Tidak ada tekanan beli/jual ekstrem dalam 14 hari terakhir. RSI di zona ini biasanya bukan sinyal utama — lihat MACD atau posisi harga vs SMA untuk konteks arah tren yang lebih jelas.`;
+  }
+
+  slider.addEventListener('input', ()=>{
+    const v = parseInt(slider.value);
+    readout.textContent = v;
+    draw(v);
+    explain.innerHTML = explainText(v);
+  });
+  draw(50); explain.innerHTML = explainText(50);
+})();
+
+/* ============================================================
+   WIDGET 4 — Simulasi Crossover MACD (Bab 7)
+============================================================ */
+(function(){
+  const c = setupCanvas('cv-macd'); if(!c) return;
+  const {ctx,w,h} = c;
+  const explain = document.getElementById('ex-macd');
+  const buttons = document.querySelectorAll('[data-macd-scenario]');
+  const n = 60;
+
+  function genSeries(scenario){
+    const macd = [], signal = [];
+    for(let i=0;i<n;i++){
+      const t = i/n;
+      let m;
+      if(scenario === 'bullish') m = -8 + 16*t + Math.sin(t*10)*1.2;
+      else if(scenario === 'bearish') m = 8 - 16*t + Math.sin(t*10)*1.2;
+      else m = Math.sin(t*14)*2.5;
+      macd.push(m);
+    }
+    for(let i=0;i<n;i++){
+      const win = macd.slice(Math.max(0,i-6), i+1);
+      signal.push(win.reduce((a,b)=>a+b,0)/win.length);
+    }
+    return {macd, signal};
+  }
+
+  function draw(scenario){
+    ctx.clearRect(0,0,w,h);
+    const {macd, signal} = genSeries(scenario);
+    const padL = 20, padR = 20, padT = 20, padB = 40;
+    const chartW = w-padL-padR, chartH = h-padT-padB;
+    const all = [...macd, ...signal];
+    const maxV = Math.max(...all), minV = Math.min(...all);
+    const range = (maxV-minV) || 1;
+    const yFor = v => padT + chartH - ((v-minV)/range)*chartH;
+    const xFor = i => padL + (i/(n-1))*chartW;
+
+    ctx.strokeStyle = 'rgba(233,238,249,0.12)';
+    ctx.beginPath(); ctx.moveTo(padL, yFor(0)); ctx.lineTo(w-padR, yFor(0)); ctx.stroke();
+    ctx.fillStyle = '#5b6480'; ctx.font='10px JetBrains Mono'; ctx.fillText('0', padL-14, yFor(0)+3);
+
+    // histogram
+    for(let i=0;i<n;i++){
+      const diff = macd[i]-signal[i];
+      ctx.fillStyle = diff>=0 ? 'rgba(45,212,167,0.4)' : 'rgba(255,107,107,0.4)';
+      const x = xFor(i), y0 = yFor(0), y1 = yFor(macd[i]-signal[i]+ (minV+maxV)/2 - (minV+maxV)/2);
+      const barH = Math.abs(yFor(diff) - yFor(0));
+      ctx.fillRect(x-2, Math.min(yFor(diff),yFor(0)), 4, barH);
+    }
+
+    function line(series,color){
+      ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2;
+      series.forEach((v,i)=>{ const x=xFor(i), y=yFor(v); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
+      ctx.stroke();
+    }
+    line(macd, '#5AB4F5'); line(signal, '#F5B942');
+
+    ctx.fillStyle = '#5AB4F5'; ctx.font='11px Inter'; ctx.fillText('● MACD', padL, h-10);
+    ctx.fillStyle = '#F5B942'; ctx.fillText('● Signal', padL+70, h-10);
+    ctx.fillStyle = '#8b96ac'; ctx.fillText('■ Histogram (MACD − Signal)', padL+150, h-10);
+  }
+
+  const texts = {
+    bullish: `<strong>Bullish Crossover.</strong> Garis MACD (biru) memotong ke atas garis Signal (kuning) — histogram berubah dari merah ke hijau. Ini dibaca sebagai penguatan momentum naik. Perhatikan: sinyal ini lebih meyakinkan kalau terjadi <em>di atas</em> garis nol (momentum sudah positif), bukan cuma crossover di bawah nol.`,
+    bearish: `<strong>Bearish Crossover.</strong> Garis MACD memotong ke bawah garis Signal — histogram berubah dari hijau ke merah. Dibaca sebagai pelemahan momentum. Sama seperti bullish crossover, sinyal ini lebih kuat kalau terjadi di bawah garis nol.`,
+    flat: `<strong>Sideways / Whipsaw.</strong> Saat harga bergerak sempit tanpa tren jelas, MACD & Signal saling memotong berkali-kali dalam waktu singkat — menghasilkan banyak sinyal palsu (whipsaw). Ini kondisi paling umum di mana ADX rendah (tren lemah) menjelaskan kenapa sinyal MACD tidak bisa diandalkan sendirian.`,
+  };
+
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      buttons.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const scenario = btn.dataset.macdScenario;
+      draw(scenario);
+      explain.innerHTML = texts[scenario];
+    });
+  });
+  draw('bullish'); explain.innerHTML = texts.bullish;
+})();
+
+/* ============================================================
+   WIDGET 5 — Support / Resistance / Fibonacci (Bab 7)
+============================================================ */
+(function(){
+  const c = setupCanvas('cv-fib'); if(!c) return;
+  const {ctx,w,h} = c;
+  const explain = document.getElementById('ex-fib');
+  const canvas = document.getElementById('cv-fib');
+
+  const padL = 60, padR = 20, padT = 20, padB = 20;
+  const chartW = w-padL-padR, chartH = h-padT-padB;
+  const priceHigh = 4200, priceLow = 3100;
+
+  // harga acak sederhana untuk ilustrasi (bukan data riil)
+  const points = [3300,3350,3420,3500,3480,3600,3700,3650,3800,3950,4050,4200,4100,3980,3850,
+                  3700,3600,3550,3480,3520,3600,3650,3580,3500,3420,3380,3350,3400,3480,3550];
+
+  function yFor(price){ return padT + chartH - ((price-priceLow)/(priceHigh-priceLow))*chartH; }
+  function xFor(i){ return padL + (i/(points.length-1))*chartW; }
+
+  const fibLevels = [
+    {pct:'0.0', price: priceHigh, desc:'Titik swing high periode ini — 100% dari pergerakan naik sudah terjadi.'},
+    {pct:'23.6', price: priceHigh - 0.236*(priceHigh-priceLow), desc:'Retracement dangkal — tren naik masih dianggap kuat kalau harga memantul di sini.'},
+    {pct:'38.2', price: priceHigh - 0.382*(priceHigh-priceLow), desc:'Level retracement umum pertama yang diperhatikan trader.'},
+    {pct:'50.0', price: priceHigh - 0.5*(priceHigh-priceLow), desc:'Bukan rasio Fibonacci asli, tapi konvensional dipakai sebagai titik tengah psikologis.'},
+    {pct:'61.8', price: priceHigh - 0.618*(priceHigh-priceLow), desc:'"Golden ratio" — dianggap level retracement paling signifikan oleh banyak trader teknikal.'},
+    {pct:'78.6', price: priceHigh - 0.786*(priceHigh-priceLow), desc:'Retracement dalam — kalau tertembus, tren naik sebelumnya mulai diragukan.'},
+    {pct:'100.0', price: priceLow, desc:'Titik swing low periode ini — retracement penuh, seluruh kenaikan sebelumnya sudah terhapus.'},
+  ];
+  const supportLevels = [3380, 3520];
+  const resistanceLevels = [3980, 4150];
+
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    ctx.strokeStyle = '#5AB4F5'; ctx.lineWidth = 2; ctx.beginPath();
+    points.forEach((p,i)=>{ const x=xFor(i), y=yFor(p); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
+    ctx.stroke();
+
+    fibLevels.forEach(f=>{
+      const y = yFor(f.price);
+      ctx.strokeStyle = 'rgba(76,201,240,0.4)'; ctx.setLineDash([2,3]);
+      ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(w-padR,y); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = '#4CC9F0'; ctx.font='9px JetBrains Mono'; ctx.textAlign='left';
+      ctx.fillText('Fib '+f.pct+'%', padL+4, y-3);
+    });
+    supportLevels.forEach(p=>{
+      const y = yFor(p);
+      ctx.strokeStyle = 'rgba(45,212,167,0.6)'; ctx.setLineDash([4,3]);
+      ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(w-padR,y); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = '#2DD4A7'; ctx.textAlign='right'; ctx.fillText('Support', w-padR-4, y-3);
+    });
+    resistanceLevels.forEach(p=>{
+      const y = yFor(p);
+      ctx.strokeStyle = 'rgba(255,107,107,0.6)'; ctx.setLineDash([4,3]);
+      ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(w-padR,y); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = '#FF6B6B'; ctx.textAlign='right'; ctx.fillText('Resistance', w-padR-4, y-3);
+    });
+
+    ctx.fillStyle = '#5b6480'; ctx.font='10px JetBrains Mono'; ctx.textAlign='right';
+    [priceLow, (priceLow+priceHigh)/2, priceHigh].forEach(p=>{
+      ctx.fillText(Math.round(p), padL-6, yFor(p)+3);
+    });
+  }
+  draw();
+
+  canvas.addEventListener('mousemove', (e)=>{
+    const rect = canvas.getBoundingClientRect();
+    const scaleY = h / rect.height;
+    const my = (e.clientY - rect.top) * scaleY;
+    const price = priceLow + ((padT+chartH-my)/chartH)*(priceHigh-priceLow);
+
+    let nearest = null, nearestDist = Infinity, nearestType = '';
+    fibLevels.forEach(f=>{ const d=Math.abs(f.price-price); if(d<nearestDist){nearestDist=d; nearest=f; nearestType='fib';} });
+    supportLevels.forEach(p=>{ const d=Math.abs(p-price); if(d<nearestDist){nearestDist=d; nearest={price:p, desc:'Level harga tempat penurunan berulang kali "ditahan" secara historis — titik pivot low yang berdekatan dikelompokkan jadi satu level ini.'}; nearestType='support';} });
+    resistanceLevels.forEach(p=>{ const d=Math.abs(p-price); if(d<nearestDist){nearestDist=d; nearest={price:p, desc:'Level harga tempat kenaikan berulang kali "tertahan" secara historis — titik pivot high yang berdekatan dikelompokkan jadi satu level ini.'}; nearestType='resistance';} });
+
+    if(nearest && nearestDist < (priceHigh-priceLow)*0.03){
+      const label = nearestType==='fib' ? `Fibonacci ${nearest.pct}%` : (nearestType==='support' ? 'Support' : 'Resistance');
+      explain.innerHTML = `<strong>${label} — sekitar ${Math.round(nearest.price)}.</strong> ${nearest.desc}`;
+    }
+  });
+  canvas.addEventListener('mouseleave', ()=>{
+    explain.innerHTML = 'Arahkan kursor ke salah satu garis level pada grafik di atas untuk melihat penjelasannya.';
+  });
+})();
+</script>
+
+</body>
+</html>
